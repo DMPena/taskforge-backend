@@ -1,6 +1,8 @@
-# Virtual environments
+# Python virtual environments
 .venv/
 venv/
+
+# Python cache and bytecode
 __pycache__/
 *.pyc
 
@@ -13,4 +15,9 @@ Thumbs.db
 # Environment / secrets
 .env
 .env.local
-.env
+
+# Docker
+*.env
+
+# Misc
+*.log
