@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  web:
+    build: .
+    container_name: taskforge_api
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      - DATABASE_URL=postgresql://taskforge_user:taskforge_pass@db:5432/taskforge_db
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15
+    container_name: taskforge_db
+    environment:
+      POSTGRES_USER: taskforge_user
+      POSTGRES_PASSWORD: taskforge_pass
+      POSTGRES_DB: taskforge_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+volumes:
+  pg_data:
