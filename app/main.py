@@ -1,6 +1,11 @@
 from fastapi import FastAPI
-from app.routers import hello
+from app.routers import task_router
 
-app = FastAPI(title="TaskForge Backend")
+app = FastAPI(title="TaskForge API")
 
-app.include_router(hello.router)
+# Register the task router
+app.include_router(task_router.router)
+
+@app.get("/")
+def root():
+    return {"message": "Welcome to TaskForge API!"}
