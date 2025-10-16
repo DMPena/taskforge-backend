@@ -17,3 +17,12 @@ class Task(BaseModel):
 
     class Config:
         orm_mode = True  # Allows conversion from SQLAlchemy model to Pydantic model
+
+
+class TaskUpdate(BaseModel):
+    title: Optional[str] = None
+    description: Optional[str] = None
+    completed: Optional[bool] = None
+
+    class Config:
+        orm_mode = True

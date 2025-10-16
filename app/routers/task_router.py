@@ -5,6 +5,7 @@ from typing import List
 from app.core.deps import get_db
 from app.schemas.task import Task, TaskCreate
 from app.services import task_service
+from app.schemas.task import TaskUpdate
 
 router = APIRouter(
     prefix="/tasks",  # URL prefix for all routes in this router
@@ -36,3 +37,12 @@ def delete_task(task_id: int, db: Session = Depends(get_db)):
     if not task:
         raise HTTPException(status_code=404, detail="Task not found")
     return task
+
+# --- PATCH /tasks/{id} ---
+
+@router.patch("/{task_id}", response_model=Task)
+def patch_task(task_id: int, changes: TaskUpdate, db: Session = Depends(get_db)):
+    updated = task_service.update_task(db, task_id, changes)
+    if not updated:
+        raise HTTPException(404, "Task not found")
+    return updated
